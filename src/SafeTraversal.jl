@@ -41,12 +41,16 @@ function lazycheckedeval(expr::Expr, evaluate)
     end
 end
 
-function lazycheckedeval(expr, evaluate)
+function lazycheckedeval(expr::Symbol, evaluate)
+    return lazycheckedeval(:($expr=$expr), evaluate)
+
+function lazycheckedeval(expr, ::Any)
     error("Expected an expression, got $(expr)")
 end
 
 """
     @⋄ var1=expr evaluation
+    @⋄ var1 evaluation
 
 Evaluates the first provided expression, and if it is not `nothing` or `missing`, evaluates the second expression using the
 first expression as a local variable. For instance:
@@ -65,6 +69,19 @@ let x = [1,2,3]
         x[1]
     end
 end
+```
+
+If the first expression is a single symbol, the value of that variable is checked for null:
+
+```julia-repl
+julia> x = [1,2,3]
+3-element Vector{Int64}:
+ 1
+ 2
+ 3
+
+julia> @⋄ x x[1]
+1
 ```
 """
 macro ⋄(expr, evaluation)
