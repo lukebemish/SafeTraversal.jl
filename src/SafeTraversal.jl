@@ -11,13 +11,11 @@ Returns `object[key]` if `object` is not `nothing` or `missing and `key` is a va
 # Examples
 ```julia-repl
 julia> nothing ⋄ :a
-nothing
 
 julia> Dict(:a => 1) ⋄ :a
 1
 
 julia> Dict(:a => 1) ⋄ :b
-nothing
 ```
 """
 ⋄(object, key) = haskey(object, key) ? object[key] : nothing
@@ -48,20 +46,26 @@ function lazycheckedeval(expr, evaluate)
 end
 
 """
+    @⋄ var1=expr evaluation
+
 Evaluates the first provided expression, and if it is not `nothing` or `missing`, evaluates the second expression using the
 first expression as a local variable. For instance:
 
-    @⋄ x=[1,2,3] x[1]
+```julia
+@⋄ x=[1,2,3] x[1]
+```
 
 This will evaluate to `1`, and is equivalent to
 
-    let x = [1,2,3]
-        if isnothing(x) || ismissing(x)
-            nothing
-        else
-            x[1]
-        end
+```julia
+let x = [1,2,3]
+    if isnothing(x) || ismissing(x)
+        nothing
+    else
+        x[1]
     end
+end
+```
 """
 macro ⋄(expr, evaluation)
     lazycheckedeval(expr, evaluate)
