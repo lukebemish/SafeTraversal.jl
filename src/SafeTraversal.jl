@@ -24,7 +24,7 @@ julia> Dict(:a => 1) ⋄ :b
 
 traverse = ⋄
 
-function lazycheckedeval(expr::Expr, evaluate)
+function _lazycheckedeval(expr::Expr, evaluate)
     symbol = if expr.head == :(=)
         expr.args[1]
     else
@@ -41,11 +41,11 @@ function lazycheckedeval(expr::Expr, evaluate)
     end
 end
 
-function lazycheckedeval(expr::Symbol, evaluate)
-    return lazycheckedeval(:($expr=$expr), evaluate)
+function _lazycheckedeval(expr::Symbol, evaluate)
+    return _lazycheckedeval(:($expr=esc($expr)), evaluate)
 end
 
-function lazycheckedeval(expr, ::Any)
+function _lazycheckedeval(expr, ::Any)
     error("Expected an expression, got $(expr)")
 end
 
@@ -86,7 +86,7 @@ julia> @⋄ x x[1]
 ```
 """
 macro ⋄(expr, evaluation)
-    lazycheckedeval(expr, evaluation)
+    _lazycheckedeval(expr, evaluation)
 end
 
 end
