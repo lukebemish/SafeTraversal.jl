@@ -1,0 +1,4 @@
+name = "SafeTraversal"
+uuid = "9c8970b2-eb1e-4cdc-9cee-42cb4435341b"
+authors = ["Luke Bemish <lukebemish@lukebemish.dev>"]
+version = "0.1.0"
