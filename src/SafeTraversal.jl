@@ -42,7 +42,7 @@ function _lazycheckedeval(expr::Expr, evaluate)
 end
 
 function _lazycheckedeval(expr::Symbol, evaluate)
-    return _lazycheckedeval(:($expr=esc($expr)), evaluate)
+    return _lazycheckedeval(:($expr=$(esc(expr))), evaluate)
 end
 
 function _lazycheckedeval(expr, ::Any)
