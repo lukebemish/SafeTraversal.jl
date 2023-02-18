@@ -43,6 +43,7 @@ end
 
 function lazycheckedeval(expr::Symbol, evaluate)
     return lazycheckedeval(:($expr=$expr), evaluate)
+end
 
 function lazycheckedeval(expr, ::Any)
     error("Expected an expression, got $(expr)")
