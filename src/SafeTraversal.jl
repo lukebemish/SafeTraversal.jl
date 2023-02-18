@@ -86,7 +86,7 @@ julia> @⋄ x x[1]
 ```
 """
 macro ⋄(expr, evaluation)
-    lazycheckedeval(expr, evaluate)
+    lazycheckedeval(expr, evaluation)
 end
 
 end
