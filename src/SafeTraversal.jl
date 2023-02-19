@@ -72,7 +72,7 @@ let x = [1,2,3]
 end
 ```
 
-If the first expression is a single symbol, the value of that variable is checked for null:
+If the first expression is a single symbol, the value of that variable is checked for `nothing` or `missing`:
 
 ```julia-repl
 julia> x = [1,2,3]
